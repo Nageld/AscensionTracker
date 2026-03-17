@@ -3,7 +3,7 @@
   "name": "Ascension Tracker",
   "author": "Book",
   "description": "Tracks the highest ascension you've won with all cards",
-  "version": "v0.0.2",
+  "version": "v0.0.3",
   "has_pck": false,
   "has_dll": true,
   "dependencies": [],
