@@ -1,0 +1,25 @@
+name: Publish
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Publish
+        shell: pwsh
+        run: >
+          dotnet publish -c Release
+          /p:Sts2DataDir="$env:STS2_DATA_DIR"
+          /p:GodotPath="$env:GODOT_PATH"
+          /p:ModsPath="${{ github.workspace }}/output/mods/"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AscensionTracker-publish
+          path: output/mods/AscensionTracker/
