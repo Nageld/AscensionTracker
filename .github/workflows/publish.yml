@@ -12,7 +12,7 @@ jobs:
 
       - name: Publish
         run: >
-          dotnet publish -c Release
+          dotnet publish -c Release /p:Platform="Any CPU"
           /p:Sts2DataDir="$STS2_DATA_DIR"
           /p:GodotPath="$GODOT_PATH"
           /p:ModsPath="${{ github.workspace }}/output/mods/"
