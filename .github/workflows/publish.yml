@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   publish:
     runs-on: self-hosted
@@ -17,8 +20,12 @@ jobs:
           /p:GodotPath="$GODOT_PATH"
           /p:ModsPath="${{ github.workspace }}/output/mods/"
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: AscensionTracker-publish
-          path: output/mods/AscensionTracker/
+      - name: Package and release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(jq -r '.version' AscensionTracker.json)
+          cd output/mods && zip -r ../AscensionTracker.zip AscensionTracker
+          gh release create "$version" ../AscensionTracker.zip \
+            --title "$version" \
+            --generate-notes
